@@ -2,10 +2,8 @@ import React from "react";
 
 function Loader() {
   return (
-    <div className="flex justify-center py-4">
-      <div className="px-5 py-4 border bg-zinc-800 text-white rounded-xl">
-        <p>Loader...</p>
-      </div>
+    <div className="w-[280px] h-[300px] flex justify-center items-center bg-zinc-400 rounded-sm">
+      <p className="text-2xl font-semibold text-white">Loading...</p>
     </div>
   );
 }

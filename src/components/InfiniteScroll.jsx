@@ -8,33 +8,37 @@ import Loader from "./Loader";
 function InfiniteScroll() {
   const [catData, setCatData] = useState([]);
   const [page, setPage] = useState(2);
-  const [loadMore, setLoadMore] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadDataOnFirstScroll, setLoadDataOnFirstScroll] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleFetchData = () => {
+    if (loading || !hasMore) return; // To stop multiple api calls and stop when no more data is available
     const totalScreenHeight = document.documentElement.scrollHeight; // total height of the entire webpage
     const viewScreenHeight = window.innerHeight; // height of the visible part of the webpage
     let scrollHeight = window.scrollY; // amount of pixels the user has scrolled down the page
 
     if (viewScreenHeight + scrollHeight + 1 >= totalScreenHeight) {
       setPage((prev) => prev + 1);
-      setLoadMore(true);
-      setIsLoading(true);
+      setLoading(true);
+      setLoadDataOnFirstScroll(true);
       // alert("Load more data");
     }
   };
 
   useEffect(() => {
-    if (loadMore) {
+    if (loadDataOnFirstScroll) {
       async function fetchMoreData() {
-        const res = await fetchData(page);
-        const data = res.slice(0, 9);
+        const data = await fetchData(page);
+
+        if (!data || data.length == 0) {
+          setHasMore(false);
+          setLoading(false);
+          return;
+        }
 
         setCatData((prev) => [...prev, ...data]);
-        if (!data) {
-          setLoadMore(false);
-        }
-        setIsLoading(false);
+        setLoading(false);
       }
       fetchMoreData();
     }
@@ -48,12 +52,10 @@ function InfiniteScroll() {
 
   return (
     <>
-      <section className="grid grid-cols-2 md:grid-cols-3 gap-10 pt-5 px-6">
-        {catData?.map((cat) => (
-          <Card key={cat.id} cat={cat} />
-        ))}
-      </section>
-      {isLoading && <Loader />}
+      {catData?.map((cat) => (
+        <Card key={cat.id} cat={cat} />
+      ))}
+      {loading && <Loader />}
     </>
   );
 }

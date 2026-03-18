@@ -3,8 +3,7 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import { fetchData } from "@/hooks/fetchData";
 
 async function InfiniteScrollPage() {
-  const res = await fetchData(1);
-  const data = res.slice(0, 9);
+  const data = await fetchData(1);
 
   return (
     <main className="min-h-screen flex justify-center pt-10">
@@ -15,8 +14,8 @@ async function InfiniteScrollPage() {
           {data.map((cat) => (
             <Card key={cat.id} cat={cat} />
           ))}
+          <InfiniteScroll />
         </section>
-        <InfiniteScroll />
       </div>
     </main>
   );
