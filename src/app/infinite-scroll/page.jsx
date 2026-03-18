@@ -1,5 +1,5 @@
-import Card from "@/components/Card";
-import InfiniteScroll from "@/components/InfiniteScroll";
+import Card from "@/components/InfiniteScroll/Card";
+import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
 import { fetchData } from "@/hooks/fetchData";
 
 async function InfiniteScrollPage() {
