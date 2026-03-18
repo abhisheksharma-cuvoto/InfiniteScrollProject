@@ -3,7 +3,7 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import { fetchData } from "@/hooks/fetchData";
 
 async function InfiniteScrollPage() {
-  const data = await fetchData(1);
+  const data = await fetchData(1, { cache: "no-store" });
 
   return (
     <main className="min-h-screen flex justify-center pt-10">
