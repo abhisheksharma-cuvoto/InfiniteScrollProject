@@ -1,5 +1,6 @@
 "use client";
 
+import { formFields } from "@/components/Contact/formFields";
 import InputField from "@/components/Contact/InputField";
 import { useForm } from "react-hook-form";
 
@@ -19,6 +20,9 @@ function Contact() {
     },
   });
 
+  const fields = formFields(errors, register);
+  console.log({ fields });
+
   const handleForm = (data) => {
     console.log(data);
     reset(); // Clears all form values
@@ -31,56 +35,19 @@ function Contact() {
         onSubmit={handleSubmit(handleForm)}
         className="w-[500px] min-h-[400px] flex flex-col gap-5 p-6 border rounded-2xl shadow"
       >
-        <InputField
-          fieldName="firstname"
-          name="First Name"
-          placeholder="your first name"
-          message="firstname is requrired"
-          errors={errors}
-          register={register}
-        />
-        <InputField
-          fieldName="lastname"
-          name="Last Name"
-          placeholder="your last name"
-          message="lastname is requrired"
-          errors={errors}
-          register={register}
-        />
-        <InputField
-          type="email"
-          fieldName="email"
-          name="Email"
-          placeholder="your email"
-          message="email is requrired"
-          errors={errors}
-          register={register}
-          validate={(value) =>
-            /^[a-zA-Z0-9._%+-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/.test(value) ||
-            "Invalid Email"
-          }
-        />
-        <InputField
-          type="number"
-          fieldName="number"
-          name="Phone"
-          placeholder="+91 ****"
-          message="phone number is requrired"
-          errors={errors}
-          register={register}
-          validate={(value) =>
-            /^\d{9,}$/.test(value) || "Enter a valid phone number"
-          }
-        />
-        <InputField
-          fieldName="message"
-          name="Message"
-          placeholder="your message"
-          message="message is requrired"
-          errors={errors}
-          register={register}
-        />
-
+        {fields.map((field) => (
+          <InputField
+            key={field.fieldName}
+            type={field.type}
+            fieldName={field.fieldName}
+            name={field.name}
+            placeholder={field.placeholder}
+            message={field.message}
+            errors={field.errors}
+            register={register}
+            validate={field?.validate}
+          />
+        ))}
         <button className="w-full py-2 bg-violet-500 text-lg font-semibold text-white rounded-md hover:bg-violet-600 cursor-pointer">
           Submit
         </button>
