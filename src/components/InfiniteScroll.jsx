@@ -7,7 +7,7 @@ import Loader from "./Loader";
 
 function InfiniteScroll() {
   const [catData, setCatData] = useState([]);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [loadDataOnFirstScroll, setLoadDataOnFirstScroll] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
