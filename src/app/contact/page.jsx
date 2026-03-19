@@ -21,7 +21,6 @@ function Contact() {
   });
 
   const fields = formFields(errors, register);
-  console.log({ fields });
 
   const handleForm = (data) => {
     console.log(data);
